@@ -6,15 +6,15 @@ const express = require('express');
 const router = express.Router();
 const Article = require('./../models/articlesM.js')
 
-router.get('/new', (req, res) => {
+router.get('/new',  async (req, res) => {
 	res.render('articles/new.ejs', { article: new Article() }) 	
 })
 
-router.get('/edit/:id', (req,res) => {
-	const article = Article.findById(req.params.id);
-	console.log(article);
+router.get('/edit/:id',async (req,res) => {
+	const article = await  Article.findById(req.params.id);
+
 	try {
-	res.redirect('/articles/edit', { article: article })
+	res.render('articles/edit', { article: article })
 	} catch (error) {
 		console.log(error);
 	}
