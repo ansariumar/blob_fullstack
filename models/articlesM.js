@@ -31,7 +31,7 @@ const articleSchema = new mongoose.Schema({
 	sanitizedHTML: {
 		type: String,
 		required: true
-	}
+	}sad
 })
 
 // this will be called before 'articleSchema' and it will fill the 'slug' in the Schema, then the next() will call the articleSchema
