@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 
 // Won't be able to submit forms without this below line
 app.use(express.urlencoded({extended: false}));
-app.use(methodOverride('_method'));             //if tis line moves below the delete button won't work
+app.use(methodOverride('_method'));             //if tis line moves below, the delete button won't work
 app.use('/articles', articleRouter);
 
 mongoose.connect('mongodb://localhost/Blog')
@@ -20,7 +20,8 @@ mongoose.connect('mongodb://localhost/Blog')
 
 app.get('/', async (req, res) => {
 
-    const DBarticles = await Articles.find().sort({date: 'desc'});  //Most recent article first
+    const DBarticles = await Articles.find()
+        .sort({date: 'desc'});                   //Most recent article first                  
 
     // It by default checks the "views" folder i.e it actually is "views/articles/index"
     res.render("articles/index", {articles: DBarticles})          //The Homepage
