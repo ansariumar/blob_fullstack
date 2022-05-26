@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const articleRouter = require('./routes/articles.js');
+const userRouter = require('./routes/user.js');
 const Articles = require('./models/articlesM');
 
 
@@ -13,10 +14,13 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride('_method'));             //if tis line moves below, the delete button won't work
 app.use('/articles', articleRouter);
+app.use('/blog', userRouter);
+
 
 mongoose.connect('mongodb://localhost/Blog')
     .then(() => console.log("Connected to Mongodb server..."))
     .catch((err) => console.log(err));
+
 
 app.get('/', async (req, res) => {
 
@@ -27,8 +31,9 @@ app.get('/', async (req, res) => {
     res.render("articles/index", {articles: DBarticles})          //The Homepage
 })
 
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () =>  {
-    console.log(`Listening to port ${port}`);
+    console.log(`Listening to port ${port} \n http://localhost:3000/`);
 });
