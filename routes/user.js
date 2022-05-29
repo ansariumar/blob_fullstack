@@ -12,5 +12,13 @@ router.get('/home', async (req, res) => {
 })
 
 
+router.get('/:slug', async (req, res) => {
+	
+	const article = await Article.findOne({slug: req.params.slug});
+	
+	if (!article) {res.status(404).redirect('/home')}
+
+	res.render('user/Ghostwind-master/post.ejs', {blog: article})
+})
 
 module.exports = router;
