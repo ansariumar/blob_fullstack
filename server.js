@@ -17,9 +17,9 @@ app.use('/articles', articleRouter);
 app.use('/blog', userRouter);
 
 
-mongoose.connect('mongodb://localhost/Blog')
+mongoose.connect('mongodb+srv://umarbhai:Aishah07@blogtest.tdneaxi.mongodb.net/?retryWrites=true&w=majority')
     .then(() => console.log("Connected to Mongodb server..."))
-    .catch((err) => console.log(err));
+    .catch((err) => console.log("Error made lolol" + err));
 
 
 app.get('/', async (req, res) => {
