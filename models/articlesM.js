@@ -38,17 +38,22 @@ const articleSchema = new mongoose.Schema({
 // here "this" refers to articleSchema
 articleSchema.pre('validate', function(next) {
 	if(this.title) {
-		this.slug = slugify(this.title, {lower: true, strict: true})
+		// this.slug = slugify(this.title, {lower: true, strict: true})
+		this.slug = createSlug(this.title)
+		console.log(this.slug)
 	}
 
 	if(this.markdown) {
 		markdownHTML = marked.parse(this.markdown); 		//converts what we write in the Markdown into HTML code		
 		this.sanitizedHTML = dompurify.sanitize(markdownHTML);	// Gets rid of the malacious HTML(security purpose) 
-		// this.sanitizedHTML = dompurify.sanitize(marked(this.markdown));
 	}
 
 	next();
 })
 
-const article = mongoose.model('Article', articleSchema);
-module.exports = article
+function createSlug(title) {
+	return slugify(title, {lower: true, strict: true})
+}
+
+const Article = mongoose.model('Article', articleSchema);
+module.exports = { Article, createSlug }
