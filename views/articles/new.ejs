@@ -13,10 +13,15 @@
     <div class="container">
         <h1 class="mb-4">New Article</h1>
         <!-- go to article.js file in that this will be submited in the '/' route -->
-        <form action='/articles' id="handleSubmit" method="POST">
+        <form id="handleSubmit">
             <%- include('_form_fields') %>
+            <!-- Brings us back to the homepage -->
+            <a href="/" class="btn btn-secondary mt-3">Cancel</a>
+            <button type="submit" id="myButton" class="btn btn-primary mt-3">Save</button>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"> </script>
+    <script src="/public/js/script.js"></script>
 </body>
 
 </html>

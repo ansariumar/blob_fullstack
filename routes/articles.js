@@ -4,7 +4,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {Article, createSlug} = require('./../models/articlesM.js')
+const {Article} = require('./../models/articlesM.js')
 
 router.get('/new',  async (req, res) => {
 	res.render('articles/new.ejs', { article: new Article() }) 	
@@ -32,7 +32,7 @@ router.get('/:slug', async (req,res) => {
 
 //on clicking the submit button, a ajax POST from frontend will be sent to this route
 //we will make a slug out of the title,  check it the slug exist 
-//if slug exist return some json, 
+//if slug exist change the slug, 
 //if slug is unique, save the article in the database and then redirect
 router.post('/', async (req, res, next) => {
 	req.article = new Article();
@@ -41,7 +41,9 @@ router.post('/', async (req, res, next) => {
 
 
 
+
 router.put('/:id', async (req, res, next) => {
+	console.log("put was called")
 	req.article = await Article.findById(req.params.id);
 	next(); 	
 }, saveArticleAndRedirect('edit'))	
@@ -62,11 +64,12 @@ router.delete('/:id', async (req,res) => {
 		console.log(article);
 		try {
 			article = await article.save().catch((err) => console.log(err));	//the try didn't work and would always was sent tp the catch block the error was in the "article.save()" some speling mistake or you forgot either async or await
-			res.redirect(`/articles/${article.slug}`)
+			res.json({location:`/articles/${article.slug}`})
 		} catch (e) {
 			res.render(`articles/${path}`, {article: article});
 		}
 	}
 }
+
 
 module.exports = router;
